@@ -40,6 +40,14 @@ class AddressTest(unittest.TestCase):
         result = {'street': 'Calle 39', 'housenumber': 'No 1540'}
         self.assertEqual(resolve('Calle 39 No 1540'), result)
 
+    def test_no_separate_2(self):
+        result = {'street': 'Calle 39', 'housenumber': 'No 1540 b'}
+        self.assertEqual(resolve('Calle 39 No 1540 b'), result)
+
+    def test_address_with_two_separators(self):
+        result = {'street': 'Chausserstrasse', 'housenumber': 'No. 5123'}
+        self.assertEqual(resolve('No. 5123, Chausserstrasse'), result)
+
 
 if __name__ == '__main__':
     unittest.main()
