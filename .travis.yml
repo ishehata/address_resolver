@@ -1,6 +1,0 @@
-language: python
-jobs:
-    include:
-        - stage: 'Testing'
-          name: 'Unit Testing'
-          script: python -m unittest address_test.py
