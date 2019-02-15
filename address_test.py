@@ -48,6 +48,15 @@ class AddressTest(unittest.TestCase):
         result = {'street': 'Chausserstrasse', 'housenumber': 'No. 5123'}
         self.assertEqual(resolve('No. 5123, Chausserstrasse'), result)
 
+    def test_exception_raised(self):
+        # self.assertRaises(ValueError, callable=resolve('Streetname'))
+        try:
+            resolve('Streetname')
+        except Exception:
+            assert True
+        else:
+            assert False
+
 
 if __name__ == '__main__':
     unittest.main()

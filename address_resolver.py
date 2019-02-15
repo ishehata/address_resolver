@@ -59,7 +59,7 @@ def resolve(address: str) -> {'street': str, 'housenumber': str}:
         result['housenumber'] = r.group(2)
         return result
 
-    raise Exception(f'Couldn\'t resolve the given address: {address}')
+    raise ValueError(f'Couldn\'t resolve the given address: {address}')
 
 
 if __name__ == '__main__':
