@@ -2,4 +2,4 @@ FROM python:3.7-alpine
 
 COPY . .
 
-CMD python address_resolver.py 
+CMD python -m unittest -vv address_test.py
