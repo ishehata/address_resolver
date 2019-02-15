@@ -1,5 +1,5 @@
 
-# Address Resolved
+# Address Resolver
 
 Address Resolver is a simple tool to resolve the street name and housenumber
 from a given string.
