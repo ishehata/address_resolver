@@ -16,23 +16,14 @@ It's important that the pattern matching happens in that order.
 import re
 
 
-
-def resolve(address: str) -> {'street': str, 'housenumber': str}:
-    """resolve takes an address as input and tries to find a known pattern
-    in it to separate street name from housenumber.
-
-    returns {'street': str, 'housenumber': str}
-    """
-    result = {'street': '', 'housenumber': ''}
-
-    # patter: address starts with a number
+def starts_with_number(address: str) -> {'street': str, 'housenumber': str}:
     r = re.match(r'^(\d+) (.*)', address)
     if r:
-        result['street'] = r.group(2)
-        result['housenumber'] = r.group(1)
-        return result
+        return {'street': r.group(2), 'housenumber': r.group(1)}
+    return None
 
-    # pattern: there is comma
+
+def comma_separated(address: str) -> {'street': str, 'housenumber': str}:
     if ',' in address:
         arr = address.split(',')
         if re.match('.*?(\d+).*?, .*', address):
@@ -41,23 +32,56 @@ def resolve(address: str) -> {'street': str, 'housenumber': str}:
         else:
             street = arr[0]
             housenumber = arr[1].strip()
-        result['street'] = street
-        result['housenumber'] = housenumber
+        result = {'street': street,
+                  'housenumber': housenumber}
         return result
+    return None
 
-    # pattern: there is a "No." before housenumber
+
+def contains_no_abbr(address: str) -> {'street': str, 'housenumber': str}:
     r = re.match(r'(.*) (No)\.? (.*)', address, re.IGNORECASE)
     if r:
-        result['street'] = r.group(1)
-        result['housenumber'] = f'{r.group(2)} {r.group(3)}'
+        result = {'street': r.group(1),
+                  'housenumber': f'{r.group(2)} {r.group(3)}'}
         return result
+    return None
 
-    # pattern: address ends with a number, or a number followed by one letter
+
+def ends_with_number(address: str) -> {'street': str, 'housenumber': str}:
     r = re.match(r'(.*) (\d+ ?(\w+)?)$', address)
     if r:
-        result['street'] = r.group(1)
-        result['housenumber'] = r.group(2)
+        result = {'street': r.group(1),
+                  'housenumber': r.group(2)}
         return result
+    return None
+
+
+def resolve(address: str) -> {'street': str, 'housenumber': str}:
+    """resolve takes an address as input and tries to find a known pattern
+    in it to separate street name from housenumber.
+
+    returns {'street': str, 'housenumber': str}
+    """
+
+    # pattern: address starts with a number
+    r = starts_with_number(address)
+    if r is not None:
+        return r
+
+    # pattern: there is comma
+    r = comma_separated(address)
+    if r is not None:
+        return r
+
+    # pattern: there is a "No." before housenumber
+    r = contains_no_abbr(address)
+    if r is not None:
+        return r
+
+    # pattern: address ends with a number, or a number followed by one letter
+    r = ends_with_number(address)
+    if r is not None:
+        return r
 
     raise ValueError(f'Couldn\'t resolve the given address: {address}')
 
