@@ -38,7 +38,7 @@ def comma_separated(address: str) -> {'street': str, 'housenumber': str}:
     return None
 
 
-def contains_no_abbr(address: str) -> {'street': str, 'housenumber': str}:
+def contains_number_abbr(address: str) -> {'street': str, 'housenumber': str}:
     r = re.match(r'(.*) (No)\.? (.*)', address, re.IGNORECASE)
     if r:
         result = {'street': r.group(1),
@@ -74,7 +74,7 @@ def resolve(address: str) -> {'street': str, 'housenumber': str}:
         return r
 
     # pattern: there is a "No." before housenumber
-    r = contains_no_abbr(address)
+    r = contains_number_abbr(address)
     if r is not None:
         return r
 
