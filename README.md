@@ -48,5 +48,5 @@ print(info) # => {'street': 'Boyenstrasse', 'housenumber': '31'}
 Current tests are implemented in `unittest` test cases, you can run them from the command line using:
 
 ```
-python -m unittest -vv address_test.py
+python -m unittest -vv
 ```
