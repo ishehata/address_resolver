@@ -12,7 +12,7 @@ The recognized patterns are:
 
     - Address starts with a number. e.g: 200 Broadway Av
     - There is a comma used in the address. e.g: 4, rue de la revolution
-    - "No." abbreviation is used before housenumber, e.g: Calle 39 No 1540
+    - "No." Number abbreviation is used before housenumber, e.g: Calle 39 No 1540
     - Address ends with a number. e.g: Musterstrasse 45B
     - If there were no matched pattern, an Exception will be raised""
 
@@ -45,7 +45,7 @@ print(info) # => {'street': 'Boyenstrasse', 'housenumber': '31'}
 
 ## Testing
 
-Current tests are implement it `unittest` test cases, you can run them from the command line using:
+Current tests are implemented in `unittest` test cases, you can run them from the command line using:
 
 ```
 python -m unittest -vv address_test.py
