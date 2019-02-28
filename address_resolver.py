@@ -17,6 +17,7 @@ import re
 
 
 def starts_with_number(address: str) -> {'street': str, 'housenumber': str}:
+    """Checks if the given address starts with a number, it expcts it to be a housenumber"""
     r = re.match(r'^(\d+) (.*)', address)
     if r:
         return {'street': r.group(2), 'housenumber': r.group(1)}
@@ -24,6 +25,8 @@ def starts_with_number(address: str) -> {'street': str, 'housenumber': str}:
 
 
 def comma_separated(address: str) -> {'street': str, 'housenumber': str}:
+    """Checks if a comma is used in the address, and finds out the number before or after the comma,
+    and use it as a housenumber, the other part will be used as street"""
     if ',' in address:
         arr = address.split(',')
         if re.match('.*?(\d+).*?, .*', address):
@@ -39,6 +42,8 @@ def comma_separated(address: str) -> {'street': str, 'housenumber': str}:
 
 
 def contains_number_abbr(address: str) -> {'street': str, 'housenumber': str}:
+    """Checks if the given address contains 'No.' or 'No' to use it as a housenumber,
+    the other part of the string will be used as street"""
     r = re.match(r'(.*) (No)\.? (.*)', address, re.IGNORECASE)
     if r:
         result = {'street': r.group(1),
@@ -48,6 +53,7 @@ def contains_number_abbr(address: str) -> {'street': str, 'housenumber': str}:
 
 
 def ends_with_number(address: str) -> {'street': str, 'housenumber': str}:
+    """Checks if the given address ends with a number so that it would be used as housenumber"""
     r = re.match(r'(.*) (\d+ ?(\w+)?)$', address)
     if r:
         result = {'street': r.group(1),
